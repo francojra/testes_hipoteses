@@ -1,7 +1,7 @@
 
 # Testes de Hipóteses ----------------------------------------------------------------------------------------------------------------------
 
-# Pacotes ----------------------------------------------------------------------------------------------------------------------------------
+# Pacotes necessários ----------------------------------------------------------------------------------------------------------------------------------
 
 if (!require(dplyr)) install.packages("dplyr")
 library(dplyr) # Manipulação de dados                                
@@ -10,6 +10,8 @@ library(car) # Funções para diagnóstico de regressão, homogeneidade, lm, glm
 if (!require(dgof)) install.packages("dgof")
 library(dgof) # Para teste de normalidade Kolmogorov-Smirnov
 
+# Verificando os dados ---------------------------------------------------------------------------------------------------------------------
+
 # Verificação da normalidade por grupo usando teste de Shapiro -----------------------------------------------------------------------------
 
 dados %>% group_by(variavel_independente) %>%
@@ -17,14 +19,13 @@ dados %>% group_by(variavel_independente) %>%
 
 shapiro.test(dados$variavel_dependente)
 
-# Verificação da normalidade por grupo usando teste Kolmogorov smirnov ---------------------------------------------------------------------
+# Verificação da normalidade por grupo usando teste Kolmogorov-Smirnov ---------------------------------------------------------------------
 
 ks.test(dados$variavel_dependente,"pnorm",mean(dados$variavel_dependente),sd(dados$variavel_dependente))
 
 # Gráfico histograma -----------------------------------------------------------------------------------------------------------------------
 
 hist(dados$variavel_dependente)
-
 
 # Verificação da presença de outliers ------------------------------------------------------------------------------------------------------
 
@@ -43,11 +44,11 @@ leveneTest(variavel_dependente ~ variavel_independente, dados, center = mean) # 
 
 modelo <- aov(variavel_dependente ~ variavel_independente, dados)
 
-### Teste de normalidade para os resíduos:
+# Teste de normalidade para os resíduos ----------------------------------------------------------------------------------------------------
 
 shapiro.test(modelo$residuals)
 
-### Verificação da presença de outliers entre os resíduos:
+# Verificação da presença de outliers nos resíduos ------------------------------------------------------------------------------------
 
 boxplot(modelo$residuals)
 
@@ -59,6 +60,6 @@ dados %>% group_by(variavel_independente) %>%
 dados %>% 
   identify_outliers(Residuos)
 
-### Verificação da homogeneidade de variâncias - teste de Levene (pacote car)
+# Verificação da homogeneidade de variâncias nos resíduos ----------------------------------------------------------------------------------
 
 leveneTest(Residuos ~ variavel_independente, dados, center = mean)
