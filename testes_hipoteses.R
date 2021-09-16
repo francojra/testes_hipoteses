@@ -19,7 +19,7 @@ dados %>% group_by(variavel_independente) %>%
 
 shapiro.test(dados$variavel_dependente)
 
-# Verificação da normalidade por grupo usando teste Kolmogorov-Smirnov ---------------------------------------------------------------------
+# Verificação da normalidade usando teste Kolmogorov-Smirnov ---------------------------------------------------------------------
 
 ks.test(dados$variavel_dependente,"pnorm",mean(dados$variavel_dependente),sd(dados$variavel_dependente))
 
@@ -42,7 +42,7 @@ leveneTest(variavel_dependente ~ variavel_independente, dados, center = mean) # 
 
 # Verificação dos pressupostos nos resíduos ---------------------------------------------------------------------------------------
 
-modelo <- aov(variavel_dependente ~ variavel_independente, dados)
+modelo <- aov(variavel_dependente ~ variavel_independente, dados) # Primeiro deve-se criar um modelo 
 
 # Teste de normalidade para os resíduos ----------------------------------------------------------------------------------------------------
 
