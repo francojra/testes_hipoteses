@@ -8,7 +8,7 @@ library(dplyr) # Manipulação de dados
 if (!require(car)) install.packages("car")   
 library(car) # Funções para diagnóstico de regressão, homogeneidade, lm, glm                               
 if (!require(dgof)) install.packages("dgof")
-library(dgof) # Para teste de normalidade Kolmogorov-Smirnov
+library(dgof) # Teste de normalidade Kolmogorov-Smirnov
 
 # Verificando os dados ---------------------------------------------------------------------------------------------------------------------
 
