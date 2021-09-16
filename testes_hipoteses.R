@@ -25,7 +25,8 @@ ks.test(dados$variavel_dependente,"pnorm",mean(dados$variavel_dependente),sd(dad
 
 hist(dados$variavel_dependente)
 
-### Verificação da presença de outliers
+
+# Verificação da presença de outliers ------------------------------------------------------------------------------------------------------
 
 boxplot(dados$variavel_dependente ~ dados$variavel_independente)
 
@@ -35,6 +36,8 @@ dados %>% group_by(variavel_independente) %>%
 # Verificação da homogeneidade de variâncias com teste de Levene  --------------------------------------------------------------------------
 
 leveneTest(variavel_dependente ~ variavel_independente, dados, center = mean) # Teste baseado na média
+
+# Verificando resíduos dos dados -----------------------------------------------------------------------------------------------------------
 
 # Verificação dos pressupostos nos resíduos ---------------------------------------------------------------------------------------
 
@@ -50,7 +53,7 @@ boxplot(modelo$residuals)
 
 dados$Residuos <- modelo$residuals
 
-dados %>% group_by(TRAT) %>% 
+dados %>% group_by(variavel_independente) %>% 
   identify_outliers(Residuos)
 
 dados %>% 
@@ -58,4 +61,4 @@ dados %>%
 
 ### Verificação da homogeneidade de variâncias - teste de Levene (pacote car)
 
-leveneTest(Residuos ~ TRAT, dados, center = mean)
+leveneTest(Residuos ~ variavel_independente, dados, center = mean)
